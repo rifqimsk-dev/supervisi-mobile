@@ -55,6 +55,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     marginBottom: 14,
+    color: '#000',
   },
 
   rowBtn: {

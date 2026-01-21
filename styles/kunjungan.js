@@ -8,15 +8,17 @@ export default StyleSheet.create({
 
   // HEADER
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#D11342',
-    paddingTop: 15,
-    paddingBottom: 20,
     paddingHorizontal: 20,
+    height: 55,
   },
   headerText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 16,
+    fontWeight: '600',
   },
 
   // SECTION
@@ -102,15 +104,21 @@ export default StyleSheet.create({
 
   // FLOATING BUTTON
   fab: {
-    position: 'absolute',
-    bottom: 0,
-    right: 20,
-    backgroundColor: '#D11342',
-    width: 55,
-    height: 55,
-    borderRadius: 30,
-    alignItems: 'center',
+    width: 30,
+    height: 30,
+    borderRadius: 28,
+    backgroundColor: '#fff',
     justifyContent: 'center',
-    elevation: 6,
+    alignItems: 'center',
+    zIndex: 999,
+
+    // Android
+    elevation: 10,
+
+    // iOS
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 3 },
   },
 });

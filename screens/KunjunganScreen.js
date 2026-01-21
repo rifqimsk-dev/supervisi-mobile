@@ -26,6 +26,13 @@ const KunjunganScreen = ({ navigation }) => {
           style={styles.header}
         >
           <Text style={styles.headerText}>Data Kunjungan</Text>
+          {/* Floating Button */}
+          <TouchableOpacity
+            style={styles.fab}
+            onPress={() => navigation.navigate('FormKunjungan')}
+          >
+            <Icon name="add" size={22} color="#E9073F" />
+          </TouchableOpacity>
         </LinearGradient>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -105,16 +112,6 @@ const KunjunganScreen = ({ navigation }) => {
 
           <View style={{ height: 120 }} />
         </ScrollView>
-
-        {/* Floating Button */}
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() => navigation.navigate('FormKunjungan')}
-        >
-          <View style={styles.fabInner}>
-            <Icon name="edit" size={22} color="#fff" />
-          </View>
-        </TouchableOpacity>
       </SafeAreaView>
     </>
   );

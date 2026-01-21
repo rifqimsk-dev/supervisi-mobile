@@ -6,13 +6,37 @@ import {
   StatusBar,
   Image,
   ScrollView,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../styles/akun';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { api } from '../utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AkunScreen = ({ navigation }) => {
+  const handleLogout = async () => {
+    try {
+      // Panggil API Laravel logout
+      await api.post('/logout');
+    } catch (err) {
+      console.log('Logout API error:', err);
+    }
+
+    // Hapus token dari AsyncStorage
+    await AsyncStorage.removeItem('token');
+
+    // Tampilkan alert sukses (opsional)
+    Alert.alert('Logout', 'Anda berhasil logout');
+
+    // Reset navigation → arahkan ke Login
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -50,11 +74,23 @@ const AkunScreen = ({ navigation }) => {
 
             {/* MENU LIST */}
             <View style={styles.menuBox}>
-              <MenuItem icon="lock" label="Ubah Password" />
-              <MenuItem icon="help-outline" label="Help & Support" />
-              <MenuItem icon="update" label="Cek Pembaharuan" />
-              <MenuItem icon="info-outline" label="Tentang" />
-              <MenuItem icon="logout" label="Keluar" />
+              <MenuItem icon="lock" label="Ubah Password" onPress={() => {}} />
+              <MenuItem
+                icon="help-outline"
+                label="Help & Support"
+                onPress={() => {}}
+              />
+              <MenuItem
+                icon="update"
+                label="Cek Pembaharuan"
+                onPress={() => {}}
+              />
+              <MenuItem
+                icon="info-outline"
+                label="Tentang"
+                onPress={() => {}}
+              />
+              <MenuItem icon="logout" label="Keluar" onPress={handleLogout} />
             </View>
           </ScrollView>
         </View>
@@ -63,8 +99,8 @@ const AkunScreen = ({ navigation }) => {
   );
 };
 
-const MenuItem = ({ icon, label }) => (
-  <TouchableOpacity style={styles.menuItem}>
+const MenuItem = ({ icon, label, onPress }) => (
+  <TouchableOpacity style={styles.menuItem} onPress={onPress}>
     <View style={styles.menuLeft}>
       <Icon name={icon} size={22} color="#444" />
       <Text style={styles.menuText}>{label}</Text>

@@ -78,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('FormKunjungan')}
           >
             <View style={styles.fabInner}>
-              <Icon name="edit" size={22} color="#fff" />
+              <Icon name="add" size={22} color="#fff" />
             </View>
           </TouchableOpacity>
         </View>

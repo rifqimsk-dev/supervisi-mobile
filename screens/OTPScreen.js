@@ -4,17 +4,35 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from '../styles/otp';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const OTPScreen = ({ navigation }) => {
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+import { api } from '../utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const OTPScreen = ({ navigation, route }) => {
+  const { email } = route.params;
+  const [otp_code, setOtp] = useState(['', '', '', '', '', '']);
   const inputs = useRef([]);
 
   const handleChange = (text, index) => {
-    const newOtp = [...otp];
+    const newOtp = [...otp_code];
     newOtp[index] = text;
     setOtp(newOtp);
-
     if (text && index < 5) {
       inputs.current[index + 1].focus();
+    }
+  };
+
+  const handleVerify = async () => {
+    const otpString = otp_code.join('');
+    if (otpString.length !== 6) {
+      return Alert.alert('Error', 'OTP harus 6 digit');
+    }
+
+    try {
+      const res = await api.post('/verify-otp', { email, otp_code: otpString });
+      await AsyncStorage.setItem('token', res.data.token);
+      navigation.reset({ index: 0, routes: [{ name: 'HomeTabs' }] });
+    } catch (err) {
+      Alert.alert('Error', err.response?.data?.message || 'OTP salah');
     }
   };
 
@@ -42,7 +60,7 @@ const OTPScreen = ({ navigation }) => {
         <Text style={styles.label}>Masukkan 6 digit angka</Text>
 
         <View style={styles.otpContainer}>
-          {otp.map((value, index) => (
+          {otp_code.map((value, index) => (
             <TextInput
               key={index}
               ref={ref => (inputs.current[index] = ref)}
@@ -56,10 +74,7 @@ const OTPScreen = ({ navigation }) => {
         </View>
 
         {/* Button */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate('HomeTabs')}
-          style={styles.buttonWrapper}
-        >
+        <TouchableOpacity onPress={handleVerify} style={styles.buttonWrapper}>
           <LinearGradient
             colors={['#D11342', '#E9073F']}
             start={{ x: 0, y: 0 }}

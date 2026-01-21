@@ -31,6 +31,7 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 16,
     marginBottom: 15,
+    color: '#333',
   },
   buttonWrapper: {
     width: '100%',
