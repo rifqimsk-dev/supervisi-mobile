@@ -5,12 +5,10 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
   TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/formKunjungan';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
